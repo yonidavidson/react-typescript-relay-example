@@ -1,20 +1,26 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import graphql from 'babel-plugin-relay/macro';
+import fetchGraphQL from './fetchGraphql';
 
+const { useState, useEffect } = React;
 function App() {
-  
-// instead of:
-//   import { graphql } from "babel-plugin-relay"
 
-console.log(graphql`
-  query UserQuery {
-    viewer {
-      id
+const [name, native] = useState(null);
+useEffect(() => {
+  fetchGraphQL(`
+  query RepositoryNameQuery {
+    countries{
+      name,native
     }
   }
-`);
+  `,{}).then(response => {
+    console.log(response)
+  })
+})
+
+console.log(name)
+console.log(native)
   return (
     <div className="App">
       <header className="App-header">

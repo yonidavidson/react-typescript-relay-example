@@ -19,8 +19,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": " react-scripts start",
+    "build": "npm run relay && react-scripts build",
+    "relay": "npm run relay-compiler --schema schema.graphql --src ./src/ --watchman false $@",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
