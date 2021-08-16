@@ -1,43 +1,37 @@
+import PokemonList from './PokemonList';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import fetchGraphQL from './fetchGraphql';
+import environment from './relay-env';
+import { QueryRenderer } from 'react-relay';
+import { graphql } from 'babel-plugin-relay/macro';
 
-const { useState, useEffect } = React;
-function App() {
-
-const [name, native] = useState(null);
-useEffect(() => {
-  fetchGraphQL(`
-  query RepositoryNameQuery {
-    countries{
-      name,native
-    }
+const query = graphql`
+  query AppQuery($first: Int!){
+    ...PokemonList_query
   }
-  `,{}).then(response => {
-    console.log(response)
-  })
-})
+`
+interface Props {
+  error: Error | null;
+  props: any;
+}
 
-console.log(name)
-console.log(native)
+const renderComponent = ({ error, props }: Props) => {
+  if(error) {
+    return <div>Error!</div>;
+  }
+  if(!props) {
+    return <div>Loading..</div>;
+  }
+  return <PokemonList query={props} />;
+};
+
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryRenderer
+      environment={environment as any}
+      query={query}
+      render={renderComponent}
+      variables={{ first: 10 }}
+    />
   );
 }
 
