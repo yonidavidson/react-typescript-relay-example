@@ -19,7 +19,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "relay && react-scripts start",
+    "start": "npm run relay && react-scripts start",
     "build": "relay && react-scripts build",
     "relay": "relay-compiler --schema schema.graphql --src ./src/ --watchman false $@",
     "test": "react-scripts test",
