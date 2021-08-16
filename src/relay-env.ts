@@ -7,7 +7,7 @@ import {
   Variables
 } from 'relay-runtime';
 
-const url = 'https://countries.trevorblades.com/'
+const url = 'https://graphql-pokemon2.vercel.app'
 
 function fetchQuery(
   operation: RequestParameters,
